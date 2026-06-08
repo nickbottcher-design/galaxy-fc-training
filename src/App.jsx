@@ -115,13 +115,13 @@ export default function App() {
                                                                                             cursor: "pointer", fontFamily: "Georgia, serif", padding: 0,
                                                                                             display: "flex", alignItems: "center", gap: 6
                                                                           }}>
-                                                                      &#8592; Galaxy Soccer
-                                                      </button>button>
+                                                                     ← Galaxy Soccer
+   </button>
                                                       <div style={{ width: 1, height: 16, background: "rgba(255,255,255,0.1)" }} />
                                                       <span style={{ fontSize: 12, letterSpacing: 2, textTransform: "uppercase", color: "#60a5fa", fontFamily: "Georgia, serif" }}>
                                                                       30-Day Training Program
                                                       </span>span>
-                                        </div>div>
+                                        </div>
                                         <button
                                                         onClick={handleSignOut}
                                                         style={{
