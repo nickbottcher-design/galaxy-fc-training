@@ -120,7 +120,7 @@ export default function App() {
                                                       <div style={{ width: 1, height: 16, background: "rgba(255,255,255,0.1)" }} />
                                                       <span style={{ fontSize: 12, letterSpacing: 2, textTransform: "uppercase", color: "#60a5fa", fontFamily: "Georgia, serif" }}>
                                                                       30-Day Training Program
-                                                      </span>span>
+                                                      </span>
                                         </div>
                                         <button
                                                         onClick={handleSignOut}
@@ -132,14 +132,14 @@ export default function App() {
                                                                           padding: "4px 12px", borderRadius: 6
                                                         }}>
                                                       Sign Out
-                                        </button>button>
-                            </div>div>
+                                        </button>
+                            </div>
                             <SoccerProgram
                                           completedDays={completedDays}
                                           onToggleComplete={toggleComplete}
                                         />
-                  </div>div>
+                  </div>
               )}
-        </div>div>
+        </div>
       );
 }</div>
