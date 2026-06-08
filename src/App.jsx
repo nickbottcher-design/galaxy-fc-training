@@ -71,11 +71,7 @@ export default function App() {
   };
 
       const handleNavigate = (dest) => {
-              if (dest === "training" && !session) {
-                        setPage("auth");
-              } else {
-                        setPage(dest);
-              }
+            setPage(dest);      
       };
   if (loading) {
         return (
