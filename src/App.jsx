@@ -76,7 +76,7 @@ export default function App() {
                           color: "#60a5fa", fontFamily: "Georgia, serif", fontSize: 14, letterSpacing: 2
                 }}>
                           LOADING...
-                </div></div>
+                </div>
               );
   }
 
