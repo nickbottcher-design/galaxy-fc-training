@@ -21,6 +21,7 @@ export default function App() {
                 const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
                         setSession(session);
                         if (session) loadProgress(session.user.id);
+                          if (session) setPage(p => p === "auth" ? "training" : p);
                 });
 
                 return () => subscription.unsubscribe();
@@ -66,8 +67,16 @@ export default function App() {
         await supabase.auth.signOut();
         setSession(null);
         setCompletedDays({});
+          setPage("home");
   };
 
+      const handleNavigate = (dest) => {
+              if (dest === "training" && !session) {
+                        setPage("auth");
+              } else {
+                        setPage(dest);
+              }
+      };
   if (loading) {
         return (
                 <div style={{
@@ -80,15 +89,15 @@ export default function App() {
               );
   }
 
-  if (!session) {
-        return <Auth />;
+    if (page === "auth") {
+            return <Auth onSuccess={() => setPage("training")} />;
   }
 
   return (
         <div>
           {page === "home" ? (
                   <GalaxyFCHome
-                              onNavigate={setPage}
+                                              onNavigate={handleNavigate}
                               session={session}
                               onSignOut={handleSignOut}
                             />
