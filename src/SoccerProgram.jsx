@@ -84,12 +84,11 @@ function Section({ title, color, children }) {
   );
 }
 
-export default function SoccerProgram() {
+export default function SoccerProgram({ completedDays = {}, onToggleComplete }) {
   const [position, setPosition] = useState(null);
   const [selectedWeek, setSelectedWeek] = useState(0);
   const [selectedDay, setSelectedDay] = useState(null);
-  const [completedDays, setCompletedDays] = useState({});
-
+  
   const pos = position ? POSITIONS[position] : null;
   const program = position ? { cm: CM_PROGRAM }[position] : null;
   const week = program ? program.weeks[selectedWeek] : null;
@@ -97,9 +96,8 @@ export default function SoccerProgram() {
   const weekColor = WEEK_COLORS[selectedWeek];
 
   const toggleComplete = (posKey, weekIdx, dayIdx) => {
-    const key = posKey + "-w" + weekIdx + "d" + dayIdx;
-    setCompletedDays(prev => ({ ...prev, [key]: !prev[key] }));
-  };
+      if (onToggleComplete) onToggleComplete(posKey, weekIdx, dayIdx);
+    
 
   const totalDays = 30;
   const completedCount = position ? Object.keys(completedDays).filter(k => k.startsWith(position + "-") && completedDays[k]).length : 0;
