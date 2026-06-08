@@ -97,6 +97,7 @@ export default function SoccerProgram({ completedDays = {}, onToggleComplete }) 
 
   const toggleComplete = (posKey, weekIdx, dayIdx) => {
       if (onToggleComplete) onToggleComplete(posKey, weekIdx, dayIdx);
+  };
     
 
   const totalDays = 30;
