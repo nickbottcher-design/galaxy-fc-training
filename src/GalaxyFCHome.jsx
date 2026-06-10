@@ -32,6 +32,7 @@ const GREY_ROSTER = [
   { name: "Charlee Hubbe", number: 15 },
   { name: "Emilee Loewe", number: 18 },
   { name: "Riley Chavis", number: 29 },
+  { name: "Iliani Hernandez" },
 ];
 
 function StarField() {
@@ -414,6 +415,8 @@ export default function GalaxyFCHome({ onNavigate }) {
         <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
           <CoachCard name="Justin Nicklas" role="Coach" initials="JN" color={GALAXY_BLUE} />
           <CoachCard name="Nick Bottcher" role="Coach" initials="NB" color="#60a5fa" />
+                <CoachCard name="Silverio Hernandez" role="Coach" initials="SH" color={GALAXY_GREY} />
+                <CoachCard name="Shannon Nicklas" role="Team Manager" initials="SN" color="#34d399" />
           <div style={{
             background: "rgba(255,255,255,0.02)",
             border: "1px dashed rgba(255,255,255,0.1)",
