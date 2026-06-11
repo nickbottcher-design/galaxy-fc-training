@@ -611,7 +611,7 @@ export default function GalaxyFCHome({ onNavigate }) {
                 borderRadius: 14
               }}>
                 <div style={{ fontSize: 10, color: GOLD, letterSpacing: 2, textTransform: "uppercase", marginBottom: 8 }}>Player Spotlight</div>
-                <div style={{ fontSize: 16, fontWeight: 900, color: "#fff", marginBottom: 4 }}>⭐ Bella Bottcher #27</div>
+                <div style={{ fontSize: 16, fontWeight: 900, color: "#fff", marginBottom: 4 }}>⭐ Bella B. #27</div>
                 <div style={{ fontSize: 12, color: "#9CA3AF", lineHeight: 1.6, fontStyle: "italic" }}>
                   "Great week scanning before receiving. Focus next week: use left foot more often."
                 </div>
