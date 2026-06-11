@@ -180,8 +180,8 @@ export default function GalaxyFCHome({ onNavigate }) {
       return events.filter(e => e.dtstart >= now);
     };
     const proxy = "https://api.allorigins.win/raw?url=";
-    const blueUrl = "https://ical-cdn.teamsnap.com/team_schedule/36dceda2-460a-4dff-af9f-f56803ac99c4.ics";
-    const greyUrl = "https://ical-cdn.teamsnap.com/team_schedule/3490de67-1724-4de7-91d0-5ab0d4c5ebb7.ics";
+    const blueUrl = "https://ical-cdn.teamsnap.com/team_schedule/3490de67-1724-4de7-91d0-5ab0d4c5ebb7.ics";
+    const greyUrl = "https://ical-cdn.teamsnap.com/team_schedule/36dceda2-460a-4dff-af9f-f56803ac99c4.ics";
     fetch(proxy + encodeURIComponent(blueUrl)).then(r=>r.text()).then(t=>setBlueEvents(parseIcal(t))).catch(()=>{});
     fetch(proxy + encodeURIComponent(greyUrl)).then(r=>r.text()).then(t=>setGreyEvents(parseIcal(t))).catch(()=>{});
   }, []);
