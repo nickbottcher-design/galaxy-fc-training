@@ -157,22 +157,33 @@ export default function GalaxyFCHome({ onNavigate }) {
   useEffect(() => {
     const parseIcal = (text) => {
       const events = [];
-      const blocks = text.split('BEGIN:VEVENT');
-      blocks.slice(1).forEach(block => {
-        const get = (key) => { const m = block.match(new RegExp(key + '[^:]*:([^\r\n]+)')); return m ? m[1].trim() : ''; };
-        const dtRaw = get('DTSTART');
-        let date = null;
-        if (dtRaw.length === 8) date = new Date(dtRaw.slice(0,4)+'-'+dtRaw.slice(4,6)+'-'+dtRaw.slice(6,8));
-        else if (dtRaw.length >= 15) date = new Date(dtRaw.slice(0,4)+'-'+dtRaw.slice(4,6)+'-'+dtRaw.slice(6,8)+'T'+dtRaw.slice(9,11)+':'+dtRaw.slice(11,13)+':'+dtRaw.slice(13,15));
-        if (date) events.push({ date, summary: get('SUMMARY'), location: get('LOCATION') });
-      });
-      return events.sort((a,b) => a.date - b.date);
+      const lines = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n").split("\n");
+      let current = null;
+      for (const line of lines) {
+        if (line === "BEGIN:VEVENT") { current = {}; }
+        else if (line === "END:VEVENT" && current) { if (current.summary && current.dtstart) events.push(current); current = null; }
+        else if (current) {
+          if (line.startsWith("SUMMARY:")) current.summary = line.slice(8).trim();
+          else if (line.startsWith("DTSTART")) {
+            const val = line.includes(":") ? line.split(":")[1].trim() : "";
+            if (val) {
+              const y=val.slice(0,4), mo=val.slice(4,6), d=val.slice(6,8);
+              const h=val.slice(9,11)||"00", mi=val.slice(11,13)||"00";
+              current.dtstart = new Date(y+"-"+mo+"-"+d+"T"+h+":"+mi+":00");
+            }
+          }
+          else if (line.startsWith("LOCATION:")) current.location = line.slice(9).trim();
+        }
+      }
+      events.sort((a,b) => a.dtstart - b.dtstart);
+      const now = new Date();
+      return events.filter(e => e.dtstart >= now);
     };
-    const proxy = 'https://api.allorigins.win/raw?url=';
-    fetch(proxy + encodeURIComponent('https://ical-cdn.teamsnap.com/team_schedule/36dceda2-460a-4dff-af9f-f56803ac99c4.ics'))
-      .then(r => r.text()).then(t => setBlueEvents(parseIcal(t))).catch(() => {});
-    fetch(proxy + encodeURIComponent('https://ical-cdn.teamsnap.com/team_schedule/3490de67-1724-4de7-91d0-5ab0d4c5ebb7.ics'))
-      .then(r => r.text()).then(t => setGreyEvents(parseIcal(t))).catch(() => {});
+    const proxy = "https://api.allorigins.win/raw?url=";
+    const blueUrl = "https://ical-cdn.teamsnap.com/team_schedule/36dceda2-460a-4dff-af9f-f56803ac99c4.ics";
+    const greyUrl = "https://ical-cdn.teamsnap.com/team_schedule/3490de67-1724-4de7-91d0-5ab0d4c5ebb7.ics";
+    fetch(proxy + encodeURIComponent(blueUrl)).then(r=>r.text()).then(t=>setBlueEvents(parseIcal(t))).catch(()=>{});
+    fetch(proxy + encodeURIComponent(greyUrl)).then(r=>r.text()).then(t=>setGreyEvents(parseIcal(t))).catch(()=>{});
   }, []);
 
   return (
@@ -264,7 +275,7 @@ export default function GalaxyFCHome({ onNavigate }) {
               padding: "7px 16px",
               fontWeight: 700
             }}>
-            Training ÃÂ¢ÃÂÃÂ½
+            Training ⚽
           </button>
         </div>
       </nav>
@@ -300,7 +311,7 @@ export default function GalaxyFCHome({ onNavigate }) {
             textTransform: "uppercase",
             marginBottom: 32,
             background: "rgba(27,79,216,0.08)"
-          }}>Baltimore Bays ÃÂÃÂ· 9U ÃÂÃÂ· Est. 2017ÃÂ¢ÃÂÃÂ2018</div>
+          }}>Baltimore Bays · 9U · Est. 2017–2018</div>
 
           {/* CREST IMAGE */}
           <div style={{
@@ -375,7 +386,7 @@ export default function GalaxyFCHome({ onNavigate }) {
                 fontFamily: "Georgia, serif",
                 border: "1.5px solid rgba(147,197,253,0.3)",
                 cursor: "pointer"
-              }}>ÃÂ¢ÃÂÃÂ½ 30-Day Training Program</button>
+              }}>⚽ 30-Day Training Program</button>
           </div>
         </div>
 
@@ -411,7 +422,7 @@ export default function GalaxyFCHome({ onNavigate }) {
           }}>
           <div>
             <div style={{ fontSize: 10, color: "#60a5fa", letterSpacing: 3, textTransform: "uppercase", marginBottom: 6 }}>Now Available</div>
-            <div style={{ fontSize: 22, fontWeight: 900, color: "#fff", marginBottom: 4 }}>30-Day Training Program ÃÂ¢ÃÂÃÂ½</div>
+            <div style={{ fontSize: 22, fontWeight: 900, color: "#fff", marginBottom: 4 }}>30-Day Training Program ⚽</div>
             <div style={{ fontSize: 13, color: "#6B7280" }}>Position-specific plans for Center Mid, Striker, Winger & Defender</div>
           </div>
           <div style={{
@@ -425,7 +436,7 @@ export default function GalaxyFCHome({ onNavigate }) {
             letterSpacing: 1,
             whiteSpace: "nowrap",
             flexShrink: 0
-          }}>Start Training ÃÂ¢ÃÂÃÂ</div>
+          }}>Start Training →</div>
         </div>
       </section>
 
@@ -470,8 +481,6 @@ export default function GalaxyFCHome({ onNavigate }) {
         }}>
           "Justin and Nick coach together and make decisions together. Our focus is player development, team culture, and helping every player reach her potential."
         </div>
-
-
       </section>
 
       {/* SCHEDULE */}
@@ -490,15 +499,15 @@ export default function GalaxyFCHome({ onNavigate }) {
                   <div style={{ color: "#6B7280", fontSize: 13, fontStyle: "italic" }}>Loading schedule...</div>
                 ) : (
                   events.slice(0, 10).map((ev, i) => (
-                    <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start", padding: "12px 16px", marginBottom: 8, background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderLeft: `3px solid ${color}`, borderRadius: 10 }}>
-                      <div style={{ minWidth: 48, textAlign: "center", background: color + "18", borderRadius: 8, padding: "6px 4px" }}>
-                        <div style={{ fontSize: 10, color, textTransform: "uppercase", letterSpacing: 1 }}>{ev.date.toLocaleDateString("en-US", { month: "short" })}</div>
-                        <div style={{ fontSize: 20, fontWeight: 900, color: "#fff", lineHeight: 1 }}>{ev.date.getDate()}</div>
+                    <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start", padding: "12px 16px", marginBottom: 8, background: "rgba(255,255,255,0.04)", borderRadius: 10, border: "1px solid " + color + "22" }}>
+                      <div style={{ minWidth: 44, textAlign: "center", background: color + "22", borderRadius: 8, padding: "6px 4px" }}>
+                        <div style={{ fontSize: 18, fontWeight: 900, color, lineHeight: 1 }}>{ev.dtstart.getDate()}</div>
+                        <div style={{ fontSize: 9, color: "#9CA3AF", textTransform: "uppercase", marginTop: 2 }}>{ev.dtstart.toLocaleDateString("en-US", { month: "short" })}</div>
                       </div>
                       <div>
-                        <div style={{ fontSize: 14, fontWeight: 700, color: "#fff", marginBottom: 2 }}>{ev.summary}</div>
-                        {ev.location && <div style={{ fontSize: 12, color: "#9CA3AF" }}>&#128205; {ev.location}</div>}
-                        <div style={{ fontSize: 11, color: "#6B7280", marginTop: 2 }}>{ev.date.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}</div>
+                        <div style={{ fontSize: 13, fontWeight: 600, color: "#fff", marginBottom: 2 }}>{ev.summary}</div>
+                        {ev.location && <div style={{ fontSize: 11, color: "#6B7280" }}>{ev.location.split("\\n")[0]}</div>}
+                        <div style={{ fontSize: 11, color: "#9CA3AF", marginTop: 2 }}>{ev.dtstart.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}</div>
                       </div>
                     </div>
                   ))
@@ -524,7 +533,7 @@ export default function GalaxyFCHome({ onNavigate }) {
                   borderColor: activeTeam === "blue" ? GALAXY_BLUE : "rgba(255,255,255,0.12)",
                   color: activeTeam === "blue" ? "#fff" : "#9CA3AF"
                 }}>
-                ÃÂ¢ÃÂ¬ÃÂ¡ Galaxy Blue
+                ⬡ Galaxy Blue
               </button>
               <button
                 className="team-btn"
@@ -534,7 +543,7 @@ export default function GalaxyFCHome({ onNavigate }) {
                   borderColor: activeTeam === "grey" ? GALAXY_GREY : "rgba(255,255,255,0.12)",
                   color: activeTeam === "grey" ? "#fff" : "#9CA3AF"
                 }}>
-                ÃÂ¢ÃÂ¬ÃÂ¡ Galaxy Grey
+                ⬡ Galaxy Grey
               </button>
             </div>
           </div>
@@ -574,9 +583,9 @@ export default function GalaxyFCHome({ onNavigate }) {
               <div style={{ marginBottom: 20 }}>
                 <div style={{ fontSize: 11, color: "#6B7280", letterSpacing: 2, textTransform: "uppercase", marginBottom: 16 }}>Schedule</div>
                 {[
-                  { label: "Practice", detail: "Tuesday ÃÂÃÂ· 6:00 PM", icon: "ÃÂ¢ÃÂÃÂ½" },
-                  { label: "Game Day", detail: "Saturday ÃÂÃÂ· 9:00 AM", icon: "ÃÂ°ÃÂÃÂÃÂÃÂ¯ÃÂ¸ÃÂ" },
-                  { label: "Weekly Challenge", detail: "Scan Before Every Touch", icon: "ÃÂ°ÃÂÃÂÃÂ" }
+                  { label: "Practice", detail: "Tuesday · 6:00 PM", icon: "⚽" },
+                  { label: "Game Day", detail: "Saturday · 9:00 AM", icon: "🏟️" },
+                  { label: "Weekly Challenge", detail: "Scan Before Every Touch", icon: "👁" }
                 ].map((item, i) => (
                   <div key={i} style={{
                     display: "flex", alignItems: "center", gap: 14,
@@ -602,11 +611,11 @@ export default function GalaxyFCHome({ onNavigate }) {
                 borderRadius: 14
               }}>
                 <div style={{ fontSize: 10, color: GOLD, letterSpacing: 2, textTransform: "uppercase", marginBottom: 8 }}>Player Spotlight</div>
-                <div style={{ fontSize: 16, fontWeight: 900, color: "#fff", marginBottom: 4 }}>ÃÂ¢ÃÂ­ÃÂ Bella Bottcher #27</div>
+                <div style={{ fontSize: 16, fontWeight: 900, color: "#fff", marginBottom: 4 }}>⭐ Bella Bottcher #27</div>
                 <div style={{ fontSize: 12, color: "#9CA3AF", lineHeight: 1.6, fontStyle: "italic" }}>
                   "Great week scanning before receiving. Focus next week: use left foot more often."
                 </div>
-                <div style={{ fontSize: 10, color: "#4B5563", marginTop: 8 }}>ÃÂ¢ÃÂÃÂ Coach note</div>
+                <div style={{ fontSize: 10, color: "#4B5563", marginTop: 8 }}>— Coach note</div>
               </div>
             </div>
           </div>
@@ -619,7 +628,7 @@ export default function GalaxyFCHome({ onNavigate }) {
           <div style={{ fontSize: 10, color: GALAXY_BLUE, letterSpacing: 4, textTransform: "uppercase", marginBottom: 10 }}>Culture</div>
           <h2 style={{ margin: "0 0 8px", fontSize: 36, fontWeight: 900, color: "#fff" }}>Galaxy Player Standards</h2>
           <p style={{ margin: 0, color: "#6B7280", fontSize: 14, lineHeight: 1.7 }}>
-            More than soccer skills ÃÂ¢ÃÂÃÂ we're building the whole person.
+            More than soccer skills — we're building the whole person.
           </p>
         </div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
@@ -668,11 +677,11 @@ export default function GalaxyFCHome({ onNavigate }) {
           <HexBadge letter="G" color={GALAXY_BLUE} size={28} />
           <div>
             <div style={{ fontSize: 12, fontWeight: 900, color: "#fff" }}>Baltimore Bays Galaxy Soccer</div>
-            <div style={{ fontSize: 10, color: "#374151" }}>9U ÃÂÃÂ· Galaxy Blue & Galaxy Grey</div>
+            <div style={{ fontSize: 10, color: "#374151" }}>9U · Galaxy Blue & Galaxy Grey</div>
           </div>
         </div>
         <div style={{ fontSize: 11, color: "#374151" }}>
-          Train with Purpose ÃÂÃÂ· Play with Confidence ÃÂÃÂ· Grow with Galaxy
+          Train with Purpose · Play with Confidence · Grow with Galaxy
         </div>
       </footer>
     </div>
