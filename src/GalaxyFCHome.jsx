@@ -264,7 +264,7 @@ export default function GalaxyFCHome({ onNavigate }) {
               padding: "7px 16px",
               fontWeight: 700
             }}>
-            Training â½
+            Training Ã¢ÂÂ½
           </button>
         </div>
       </nav>
@@ -300,7 +300,7 @@ export default function GalaxyFCHome({ onNavigate }) {
             textTransform: "uppercase",
             marginBottom: 32,
             background: "rgba(27,79,216,0.08)"
-          }}>Baltimore Bays Â· 9U Â· Est. 2017â2018</div>
+          }}>Baltimore Bays ÃÂ· 9U ÃÂ· Est. 2017Ã¢ÂÂ2018</div>
 
           {/* CREST IMAGE */}
           <div style={{
@@ -375,7 +375,7 @@ export default function GalaxyFCHome({ onNavigate }) {
                 fontFamily: "Georgia, serif",
                 border: "1.5px solid rgba(147,197,253,0.3)",
                 cursor: "pointer"
-              }}>â½ 30-Day Training Program</button>
+              }}>Ã¢ÂÂ½ 30-Day Training Program</button>
           </div>
         </div>
 
@@ -411,7 +411,7 @@ export default function GalaxyFCHome({ onNavigate }) {
           }}>
           <div>
             <div style={{ fontSize: 10, color: "#60a5fa", letterSpacing: 3, textTransform: "uppercase", marginBottom: 6 }}>Now Available</div>
-            <div style={{ fontSize: 22, fontWeight: 900, color: "#fff", marginBottom: 4 }}>30-Day Training Program â½</div>
+            <div style={{ fontSize: 22, fontWeight: 900, color: "#fff", marginBottom: 4 }}>30-Day Training Program Ã¢ÂÂ½</div>
             <div style={{ fontSize: 13, color: "#6B7280" }}>Position-specific plans for Center Mid, Striker, Winger & Defender</div>
           </div>
           <div style={{
@@ -425,7 +425,7 @@ export default function GalaxyFCHome({ onNavigate }) {
             letterSpacing: 1,
             whiteSpace: "nowrap",
             flexShrink: 0
-          }}>Start Training â</div>
+          }}>Start Training Ã¢ÂÂ</div>
         </div>
       </section>
 
@@ -471,6 +471,8 @@ export default function GalaxyFCHome({ onNavigate }) {
           "Justin and Nick coach together and make decisions together. Our focus is player development, team culture, and helping every player reach her potential."
         </div>
 
+
+      </section>
 
       {/* SCHEDULE */}
       <section id="schedule" style={{ padding: "80px 24px", background: "rgba(255,255,255,0.015)", borderTop: "1px solid rgba(255,255,255,0.05)" }}>
@@ -522,7 +524,7 @@ export default function GalaxyFCHome({ onNavigate }) {
                   borderColor: activeTeam === "blue" ? GALAXY_BLUE : "rgba(255,255,255,0.12)",
                   color: activeTeam === "blue" ? "#fff" : "#9CA3AF"
                 }}>
-                â¬¡ Galaxy Blue
+                Ã¢Â¬Â¡ Galaxy Blue
               </button>
               <button
                 className="team-btn"
@@ -532,7 +534,7 @@ export default function GalaxyFCHome({ onNavigate }) {
                   borderColor: activeTeam === "grey" ? GALAXY_GREY : "rgba(255,255,255,0.12)",
                   color: activeTeam === "grey" ? "#fff" : "#9CA3AF"
                 }}>
-                â¬¡ Galaxy Grey
+                Ã¢Â¬Â¡ Galaxy Grey
               </button>
             </div>
           </div>
@@ -572,9 +574,9 @@ export default function GalaxyFCHome({ onNavigate }) {
               <div style={{ marginBottom: 20 }}>
                 <div style={{ fontSize: 11, color: "#6B7280", letterSpacing: 2, textTransform: "uppercase", marginBottom: 16 }}>Schedule</div>
                 {[
-                  { label: "Practice", detail: "Tuesday Â· 6:00 PM", icon: "â½" },
-                  { label: "Game Day", detail: "Saturday Â· 9:00 AM", icon: "ðï¸" },
-                  { label: "Weekly Challenge", detail: "Scan Before Every Touch", icon: "ð" }
+                  { label: "Practice", detail: "Tuesday ÃÂ· 6:00 PM", icon: "Ã¢ÂÂ½" },
+                  { label: "Game Day", detail: "Saturday ÃÂ· 9:00 AM", icon: "Ã°ÂÂÂÃ¯Â¸Â" },
+                  { label: "Weekly Challenge", detail: "Scan Before Every Touch", icon: "Ã°ÂÂÂ" }
                 ].map((item, i) => (
                   <div key={i} style={{
                     display: "flex", alignItems: "center", gap: 14,
@@ -600,11 +602,11 @@ export default function GalaxyFCHome({ onNavigate }) {
                 borderRadius: 14
               }}>
                 <div style={{ fontSize: 10, color: GOLD, letterSpacing: 2, textTransform: "uppercase", marginBottom: 8 }}>Player Spotlight</div>
-                <div style={{ fontSize: 16, fontWeight: 900, color: "#fff", marginBottom: 4 }}>â­ Bella Bottcher #27</div>
+                <div style={{ fontSize: 16, fontWeight: 900, color: "#fff", marginBottom: 4 }}>Ã¢Â­Â Bella Bottcher #27</div>
                 <div style={{ fontSize: 12, color: "#9CA3AF", lineHeight: 1.6, fontStyle: "italic" }}>
                   "Great week scanning before receiving. Focus next week: use left foot more often."
                 </div>
-                <div style={{ fontSize: 10, color: "#4B5563", marginTop: 8 }}>â Coach note</div>
+                <div style={{ fontSize: 10, color: "#4B5563", marginTop: 8 }}>Ã¢ÂÂ Coach note</div>
               </div>
             </div>
           </div>
@@ -617,7 +619,7 @@ export default function GalaxyFCHome({ onNavigate }) {
           <div style={{ fontSize: 10, color: GALAXY_BLUE, letterSpacing: 4, textTransform: "uppercase", marginBottom: 10 }}>Culture</div>
           <h2 style={{ margin: "0 0 8px", fontSize: 36, fontWeight: 900, color: "#fff" }}>Galaxy Player Standards</h2>
           <p style={{ margin: 0, color: "#6B7280", fontSize: 14, lineHeight: 1.7 }}>
-            More than soccer skills â we're building the whole person.
+            More than soccer skills Ã¢ÂÂ we're building the whole person.
           </p>
         </div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
@@ -666,11 +668,11 @@ export default function GalaxyFCHome({ onNavigate }) {
           <HexBadge letter="G" color={GALAXY_BLUE} size={28} />
           <div>
             <div style={{ fontSize: 12, fontWeight: 900, color: "#fff" }}>Baltimore Bays Galaxy Soccer</div>
-            <div style={{ fontSize: 10, color: "#374151" }}>9U Â· Galaxy Blue & Galaxy Grey</div>
+            <div style={{ fontSize: 10, color: "#374151" }}>9U ÃÂ· Galaxy Blue & Galaxy Grey</div>
           </div>
         </div>
         <div style={{ fontSize: 11, color: "#374151" }}>
-          Train with Purpose Â· Play with Confidence Â· Grow with Galaxy
+          Train with Purpose ÃÂ· Play with Confidence ÃÂ· Grow with Galaxy
         </div>
       </footer>
     </div>
