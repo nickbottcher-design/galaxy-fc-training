@@ -11,28 +11,28 @@ const STANDARDS = [
 ];
 
 const BLUE_ROSTER = [
-  { name: "Riley Mullinix", number: 1 },
-  { name: "Angie Martinez", number: 5 },
-  { name: "Taylor Sparks", number: 6 },
-  { name: "Skylar Nicklas", number: 7 },
-  { name: "Jade Rivas", number: 10 },
-  { name: "Selah Djiogo", number: 19 },
-  { name: "Rylee Bradney", number: 21 },
-  { name: "Celine Saba", number: 22 },
-  { name: "Sanaa Wright", number: 23 },
-  { name: "Bella Bottcher", number: 27 },
+  { name: "Riley M.", number: 1 },
+  { name: "Angie M.", number: 5 },
+  { name: "Taylor S.", number: 6 },
+  { name: "Skylar N.", number: 7 },
+  { name: "Jade R.", number: 10 },
+  { name: "Selah D.", number: 19 },
+  { name: "Rylee B.", number: 21 },
+  { name: "Celine S.", number: 22 },
+  { name: "Sanaa W.", number: 23 },
+  { name: "Bella B.", number: 27 },
 ];
 
 const GREY_ROSTER = [
-  { name: "Riley Mullinix", number: 1 },
-  { name: "Lily Wilson", number: 4 },
-  { name: "Ivy Brooks", number: 9 },
-  { name: "Gia Kaputsos", number: 11 },
-  { name: "Zyra Amollo", number: 14 },
-  { name: "Charlee Hubbe", number: 15 },
-  { name: "Emilee Loewe", number: 18 },
-  { name: "Riley Chavis", number: 29 },
-  { name: "Iliani Hernandez" },
+  { name: "Riley M.", number: 1 },
+  { name: "Lily W.", number: 4 },
+  { name: "Ivy B.", number: 9 },
+  { name: "Gia K.", number: 11 },
+  { name: "Zyra A.", number: 14 },
+  { name: "Charlee H.", number: 15 },
+  { name: "Emilee L.", number: 18 },
+  { name: "Riley C.", number: 29 },
+  { name: "Iliani H." },
 ];
 
 function StarField() {
