@@ -89,8 +89,9 @@ export default function SoccerProgram({ completedDays = {}, onToggleComplete }) 
   const [selectedWeek, setSelectedWeek] = useState(0);
   const [selectedDay, setSelectedDay] = useState(null);
   
+  const PROGRAMS = { cm: CM_PROGRAM };
   const pos = position ? POSITIONS[position] : null;
-  const program = position ? { cm: CM_PROGRAM }[position] : null;
+  const program = position ? PROGRAMS[position] : null;
   const week = program ? program.weeks[selectedWeek] : null;
   const day = week && selectedDay !== null ? week.days[selectedDay] : null;
   const weekColor = WEEK_COLORS[selectedWeek];
@@ -127,6 +128,24 @@ export default function SoccerProgram({ completedDays = {}, onToggleComplete }) 
                 </div>
               </button>
             ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!program) {
+    return (
+      <div style={{ fontFamily: "'Georgia', serif", background: "#0a0f1e", minHeight: "100vh", color: "#f0f0f0", padding: "32px 20px" }}>
+        <div style={{ maxWidth: 480, margin: "0 auto" }}>
+          <button onClick={() => { setPosition(null); setSelectedDay(null); }}
+            style={{ display: "flex", alignItems: "center", gap: 6, background: "transparent", border: "none", color: pos.color, fontSize: 12, cursor: "pointer", fontFamily: "Georgia, serif", marginBottom: 24, padding: 0 }}>
+            ← Change Position
+          </button>
+          <div style={{ textAlign: "center", padding: "48px 24px", background: pos.color + "10", border: "1px solid " + pos.color + "30", borderRadius: 16 }}>
+            <div style={{ fontSize: 40, marginBottom: 12 }}>{pos.emoji}</div>
+            <div style={{ fontSize: 20, fontWeight: 900, color: "#fff", marginBottom: 6 }}>{pos.label} Program</div>
+            <div style={{ fontSize: 13, color: "#888", lineHeight: 1.6 }}>Coming soon! The {pos.label} 30-day program is still in the works.<br />For now, try the Center Mid program.</div>
           </div>
         </div>
       </div>

@@ -156,8 +156,23 @@ export default function GalaxyFCHome({ onNavigate }) {
   }, []);
   useEffect(() => {
     const parseIcal = (text) => {
+      // Normalize newlines, then unfold continuation lines (RFC 5545: a line
+      // starting with a space or tab continues the previous one).
+      const unfolded = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n").replace(/\n[ \t]/g, "");
+      const lines = unfolded.split("\n");
+      const parseDate = (line) => {
+        // e.g. "DTSTART:20260618T230000Z" or "DTSTART;TZID=America/New_York:20260618T190000"
+        const idx = line.indexOf(":");
+        if (idx === -1) return null;
+        const val = line.slice(idx + 1).trim();
+        if (val.length < 8) return null;
+        const y = +val.slice(0, 4), mo = +val.slice(4, 6), d = +val.slice(6, 8);
+        const h = +val.slice(9, 11) || 0, mi = +val.slice(11, 13) || 0;
+        // A trailing "Z" means UTC; otherwise treat as the viewer's local time.
+        const dt = val.endsWith("Z") ? new Date(Date.UTC(y, mo - 1, d, h, mi)) : new Date(y, mo - 1, d, h, mi);
+        return isNaN(dt) ? null : dt;
+      };
       const events = [];
-      const lines = text.replace(/\r\n/g, "\n").replace(/\r/g, "\n").split("\n");
       let current = null;
       for (const line of lines) {
         if (line === "BEGIN:VEVENT") { current = {}; }
@@ -165,12 +180,8 @@ export default function GalaxyFCHome({ onNavigate }) {
         else if (current) {
           if (line.startsWith("SUMMARY:")) current.summary = line.slice(8).trim();
           else if (line.startsWith("DTSTART")) {
-            const val = line.includes(":") ? line.split(":")[1].trim() : "";
-            if (val) {
-              const y=val.slice(0,4), mo=val.slice(4,6), d=val.slice(6,8);
-              const h=val.slice(9,11)||"00", mi=val.slice(11,13)||"00";
-              current.dtstart = new Date(y+"-"+mo+"-"+d+"T"+h+":"+mi+":00");
-            }
+            const dt = parseDate(line);
+            if (dt) current.dtstart = dt;
           }
           else if (line.startsWith("LOCATION:")) current.location = line.slice(9).trim();
         }
