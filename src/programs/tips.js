@@ -1,0 +1,7 @@
+// Position-specific golden rules shown on Week 1.
+export const TIPS = {
+  cm: ["A CM sees the whole field — scan before every touch.", "Fast feet = being ready. Never flat-footed waiting for the ball.", "Feints only work if you commit — half-hearted fakes fool nobody.", "Both feet matter — always train your weaker foot.", "Sleep 9+ hours — that's when your body gets stronger.", "The best CMs are fit enough to run box-to-box all game."],
+  striker: ["Goals come from movement BEFORE the ball arrives.", "See the keeper before you shoot — pick your corner.", "Fast feet get you that half-yard you need in the box.", "Feints freeze defenders — commit to them fully.", "Visualize scoring. Studies show it actually works.", "A striker who doesn't score still helps — hold up, link, press."],
+  winger: ["Your speed is your weapon — protect it with rest.", "Fast feet beat defenders more than fancy moves.", "See the striker's run before you cross — cross TO them.", "Feints + speed = impossible to stop. Train both.", "Both feet let you go either way — train the weak one!", "Wingers who track back earn their team's trust."],
+  defender: ["Scan before every touch — know your pressure and your outlet.", "Fast feet keep you goal-side. Never flat-footed.", "Defending is about position, not tackles. Get goal-side first.", "Feints help you escape the press — use them confidently.", "Communicate! Scanning only helps if you share what you see.", "Clearances are last resort. Play out when you can."],
+};
