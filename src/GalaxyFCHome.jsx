@@ -461,22 +461,7 @@ export default function GalaxyFCHome({ onNavigate }) {
           <CoachCard name="Justin Nicklas" role="Coach" initials="JN" color={GALAXY_BLUE} />
           <CoachCard name="Nick Bottcher" role="Coach" initials="NB" color="#60a5fa" />
               <CoachCard name="Shannon Nicklas" role="Team Manager" initials="SN" color="#34d399" />
-          <div style={{
-            background: "rgba(255,255,255,0.02)",
-            border: "1px dashed rgba(255,255,255,0.1)",
-            borderRadius: 16,
-            padding: "28px 24px",
-            flex: 1, minWidth: 180,
-            display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center",
-            gap: 8
-          }}>
-            <div style={{ width: 40, height: 40, borderRadius: "50%", background: "rgba(255,255,255,0.05)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <span style={{ fontSize: 20, color: "#4B5563" }}>+</span>
-            </div>
-            <div style={{ fontSize: 11, color: "#4B5563", letterSpacing: 2, textTransform: "uppercase" }}>Team Manager</div>
-            <div style={{ fontSize: 14, color: "#6B7280" }}>Coming Soon</div>
           </div>
-        </div>
 
         <div style={{
           marginTop: 32,
