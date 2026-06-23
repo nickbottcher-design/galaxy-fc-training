@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { STRIKER_PROGRAM } from "./programs/strikerProgram";
+import { WINGER_PROGRAM } from "./programs/wingerProgram";
+import { DEFENDER_PROGRAM } from "./programs/defenderProgram";
 
 const POSITIONS = {
   cm: { id: "cm", label: "Center Mid", emoji: "🎯", color: "#4ade80", desc: "The engine of the team. Link defense to attack, press, distribute, and lead.", traits: ["Box-to-box runs", "Scanning & vision", "Switching the field", "Pressing triggers"] },
@@ -89,7 +92,7 @@ export default function SoccerProgram({ completedDays = {}, onToggleComplete }) 
   const [selectedWeek, setSelectedWeek] = useState(0);
   const [selectedDay, setSelectedDay] = useState(null);
   
-  const PROGRAMS = { cm: CM_PROGRAM };
+  const PROGRAMS = { cm: CM_PROGRAM, striker: STRIKER_PROGRAM, winger: WINGER_PROGRAM, defender: DEFENDER_PROGRAM };
   const pos = position ? POSITIONS[position] : null;
   const program = position ? PROGRAMS[position] : null;
   const week = program ? program.weeks[selectedWeek] : null;
