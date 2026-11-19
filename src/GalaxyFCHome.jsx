@@ -5,10 +5,9 @@ const GALAXY_GREY = "#6B7280";
 const NAVY = "#0B1E4D";
 const GOLD = "#F59E0B";
 
-// TeamSnap iCal feeds. Used both for the live fetch and as a fallback
-// "add to your calendar" link if the proxy/fetch fails.
-const BLUE_ICAL = "https://ical-cdn.teamsnap.com/team_schedule/3490de67-1724-4de7-91d0-5ab0d4c5ebb7.ics";
-const GREY_ICAL = "https://ical-cdn.teamsnap.com/team_schedule/36dceda2-460a-4dff-af9f-f56803ac99c4.ics";
+// Combined TeamSnap iCal feed (all teams). Used both for the live fetch and as a
+// fallback "add to your calendar" link if the proxy/fetch fails.
+const SCHEDULE_ICAL = "https://ical-cdn.teamsnap.com/user_schedule/0d37e260-f9ca-013c-17a9-07935df44441.ics";
 
 const STANDARDS = [
   "Integrity", "Effort", "Coachability", "Accountability", "Teamwork",
@@ -153,8 +152,7 @@ export default function GalaxyFCHome({ onNavigate }) {
   const [scrollY, setScrollY] = useState(0);
   // Each feed tracks its own status so the UI can tell apart "still loading",
   // "loaded with events", and "failed" (e.g. the public proxy is down).
-  const [blueFeed, setBlueFeed] = useState({ status: "loading", events: [] });
-  const [greyFeed, setGreyFeed] = useState({ status: "loading", events: [] });
+  const [feed, setFeed] = useState({ status: "loading", events: [] });
 
   useEffect(() => {
     const onScroll = () => setScrollY(window.scrollY);
@@ -198,13 +196,10 @@ export default function GalaxyFCHome({ onNavigate }) {
       return events.filter(e => e.dtstart >= now);
     };
     const proxy = "https://api.allorigins.win/raw?url=";
-    const load = (url, setFeed) =>
-      fetch(proxy + encodeURIComponent(url))
-        .then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
-        .then(t => setFeed({ status: "ok", events: parseIcal(t) }))
-        .catch(() => setFeed({ status: "error", events: [] }));
-    load(BLUE_ICAL, setBlueFeed);
-    load(GREY_ICAL, setGreyFeed);
+    fetch(proxy + encodeURIComponent(SCHEDULE_ICAL))
+      .then(r => { if (!r.ok) throw new Error("HTTP " + r.status); return r.text(); })
+      .then(t => setFeed({ status: "ok", events: parseIcal(t) }))
+      .catch(() => setFeed({ status: "error", events: [] }));
   }, []);
 
   return (
@@ -501,38 +496,33 @@ export default function GalaxyFCHome({ onNavigate }) {
           <div style={{ marginBottom: 40 }}>
             <div style={{ fontSize: 10, color: GALAXY_BLUE, letterSpacing: 4, textTransform: "uppercase", marginBottom: 10 }}>Upcoming Events</div>
             <h2 style={{ margin: "0 0 8px", fontSize: 36, fontWeight: 900, color: "#fff" }}>Team Schedule</h2>
-            <p style={{ margin: 0, fontSize: 14, color: "#6B7280" }}>Live calendars synced from TeamSnap</p>
+            <p style={{ margin: 0, fontSize: 14, color: "#6B7280" }}>Live calendar synced from TeamSnap</p>
           </div>
-          <div style={{ display: "flex", gap: 32, flexWrap: "wrap" }}>
-            {[{ label: "Galaxy Blue", feed: blueFeed, color: GALAXY_BLUE, ical: BLUE_ICAL }, { label: "Galaxy Grey", feed: greyFeed, color: GALAXY_GREY, ical: GREY_ICAL }].map(({ label, feed, color, ical }) => (
-              <div key={label} style={{ flex: 1, minWidth: 280 }}>
-                <div style={{ fontSize: 11, color, letterSpacing: 3, textTransform: "uppercase", marginBottom: 16, fontWeight: 700 }}>{label}</div>
-                {feed.status === "loading" ? (
-                  <div style={{ color: "#6B7280", fontSize: 13, fontStyle: "italic" }}>Loading schedule...</div>
-                ) : feed.status === "error" ? (
-                  <div style={{ fontSize: 13, color: "#9CA3AF", lineHeight: 1.6 }}>
-                    Couldn't load the live schedule right now.{" "}
-                    <a href={ical} style={{ color, textDecoration: "underline" }}>Open the TeamSnap calendar →</a>
-                  </div>
-                ) : feed.events.length === 0 ? (
-                  <div style={{ color: "#6B7280", fontSize: 13, fontStyle: "italic" }}>No upcoming events scheduled.</div>
-                ) : (
-                  feed.events.slice(0, 10).map((ev, i) => (
-                    <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start", padding: "12px 16px", marginBottom: 8, background: "rgba(255,255,255,0.04)", borderRadius: 10, border: "1px solid " + color + "22" }}>
-                      <div style={{ minWidth: 44, textAlign: "center", background: color + "22", borderRadius: 8, padding: "6px 4px" }}>
-                        <div style={{ fontSize: 18, fontWeight: 900, color, lineHeight: 1 }}>{ev.dtstart.getDate()}</div>
-                        <div style={{ fontSize: 9, color: "#9CA3AF", textTransform: "uppercase", marginTop: 2 }}>{ev.dtstart.toLocaleDateString("en-US", { month: "short" })}</div>
-                      </div>
-                      <div>
-                        <div style={{ fontSize: 13, fontWeight: 600, color: "#fff", marginBottom: 2 }}>{ev.summary}</div>
-                        {ev.location && <div style={{ fontSize: 11, color: "#6B7280" }}>{ev.location.split("\\n")[0]}</div>}
-                        <div style={{ fontSize: 11, color: "#9CA3AF", marginTop: 2 }}>{ev.dtstart.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}</div>
-                      </div>
-                    </div>
-                  ))
-                )}
+          <div style={{ maxWidth: 560 }}>
+            {feed.status === "loading" ? (
+              <div style={{ color: "#6B7280", fontSize: 13, fontStyle: "italic" }}>Loading schedule...</div>
+            ) : feed.status === "error" ? (
+              <div style={{ fontSize: 13, color: "#9CA3AF", lineHeight: 1.6 }}>
+                Couldn't load the live schedule right now.{" "}
+                <a href={SCHEDULE_ICAL} style={{ color: GALAXY_BLUE, textDecoration: "underline" }}>Open the TeamSnap calendar →</a>
               </div>
-            ))}
+            ) : feed.events.length === 0 ? (
+              <div style={{ color: "#6B7280", fontSize: 13, fontStyle: "italic" }}>No upcoming events scheduled.</div>
+            ) : (
+              feed.events.slice(0, 12).map((ev, i) => (
+                <div key={i} style={{ display: "flex", gap: 12, alignItems: "flex-start", padding: "12px 16px", marginBottom: 8, background: "rgba(255,255,255,0.04)", borderRadius: 10, border: "1px solid " + GALAXY_BLUE + "22" }}>
+                  <div style={{ minWidth: 44, textAlign: "center", background: GALAXY_BLUE + "22", borderRadius: 8, padding: "6px 4px" }}>
+                    <div style={{ fontSize: 18, fontWeight: 900, color: GALAXY_BLUE, lineHeight: 1 }}>{ev.dtstart.getDate()}</div>
+                    <div style={{ fontSize: 9, color: "#9CA3AF", textTransform: "uppercase", marginTop: 2 }}>{ev.dtstart.toLocaleDateString("en-US", { month: "short" })}</div>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 13, fontWeight: 600, color: "#fff", marginBottom: 2 }}>{ev.summary}</div>
+                    {ev.location && <div style={{ fontSize: 11, color: "#6B7280" }}>{ev.location.split("\\n")[0]}</div>}
+                    <div style={{ fontSize: 11, color: "#9CA3AF", marginTop: 2 }}>{ev.dtstart.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" })}</div>
+                  </div>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </section>
