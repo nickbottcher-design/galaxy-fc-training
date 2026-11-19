@@ -126,7 +126,7 @@ function PlayerChip({ name, number, index, color }) {
         background: color + "20",
         display: "flex", alignItems: "center", justifyContent: "center",
         fontSize: 11, fontWeight: 700, color, flexShrink: 0
-      }}>#{number}</div>
+      }}>{number != null ? "#" + number : "–"}</div>
       <span style={{ fontSize: 13, color: "#ddd" }}>{name}</span>
     </div>
   );
@@ -256,10 +256,16 @@ export default function GalaxyFCHome({ onNavigate }) {
         .section-enter {
           animation: fadeUp 0.6s ease forwards;
         }
+        @media (max-width: 720px) {
+          .site-nav { padding: 12px 16px !important; }
+          .site-nav .nav-link { display: none; }
+          .site-nav .nav-links { gap: 0 !important; }
+          .teams-grid { grid-template-columns: 1fr !important; }
+        }
       `}</style>
 
       {/* NAV */}
-      <nav style={{
+      <nav className="site-nav" style={{
         position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
         padding: "16px 32px",
         display: "flex", alignItems: "center", justifyContent: "space-between",
@@ -275,10 +281,10 @@ export default function GalaxyFCHome({ onNavigate }) {
             <div style={{ fontSize: 9, color: "#4B5563", letterSpacing: 2, textTransform: "uppercase" }}>Baltimore Bays</div>
           </div>
         </div>
-        <div style={{ display: "flex", gap: 28, alignItems: "center" }}>
-          <a href="#teams" className="nav-link">Teams</a>
+        <div className="nav-links" style={{ display: "flex", gap: 28, alignItems: "center" }}>
           <a href="#coaches" className="nav-link">Coaches</a>
           <a href="#schedule" className="nav-link">Schedule</a>
+          <a href="#teams" className="nav-link">Teams</a>
           <a href="#standards" className="nav-link">Standards</a>
           <a href="#about" className="nav-link">About</a>
           <button
@@ -345,6 +351,7 @@ export default function GalaxyFCHome({ onNavigate }) {
               src="/galaxy-crest.png"
               alt="Baltimore Bays Galaxy Soccer crest"
               style={{ width: "100%", height: "100%", objectFit: "contain" }}
+              onError={(e) => { e.currentTarget.parentElement.style.display = "none"; }}
             />
           </div>
 
@@ -560,7 +567,7 @@ export default function GalaxyFCHome({ onNavigate }) {
             </div>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32 }}>
+          <div className="teams-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 32 }}>
             <div>
               <div style={{
                 padding: "20px 24px",
@@ -581,7 +588,7 @@ export default function GalaxyFCHome({ onNavigate }) {
               <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
                 {(activeTeam === "blue" ? BLUE_ROSTER : GREY_ROSTER).map((player, i) => (
                   <PlayerChip
-                    key={player.name + player.number}
+                    key={player.name + "-" + (player.number ?? "none")}
                     name={player.name}
                     number={player.number}
                     index={i}

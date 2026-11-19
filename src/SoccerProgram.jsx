@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { CM_PROGRAM } from "./programs/cmProgram";
 import { STRIKER_PROGRAM } from "./programs/strikerProgram";
 import { WINGER_PROGRAM } from "./programs/wingerProgram";
@@ -46,6 +46,9 @@ export default function SoccerProgram({ completedDays = {}, onToggleComplete }) 
   const [selectedWeek, setSelectedWeek] = useState(0);
   const [selectedDay, setSelectedDay] = useState(null);
   
+  // Jump to the top when switching position, week or day.
+  useEffect(() => { window.scrollTo(0, 0); }, [position, selectedWeek, selectedDay]);
+
   const PROGRAMS = { cm: CM_PROGRAM, striker: STRIKER_PROGRAM, winger: WINGER_PROGRAM, defender: DEFENDER_PROGRAM };
   const pos = position ? POSITIONS[position] : null;
   const program = position ? PROGRAMS[position] : null;

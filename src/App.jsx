@@ -32,6 +32,10 @@ export default function App() {
     setCompletedDays(prev => ({ ...prev, [key]: !prev[key] }));
   };
 
+  // Start each page at the top (otherwise the training page opens scrolled
+  // to wherever the home page was).
+  useEffect(() => { window.scrollTo(0, 0); }, [page]);
+
   const handleNavigate = (dest) => {
     setPage(dest);
   };
