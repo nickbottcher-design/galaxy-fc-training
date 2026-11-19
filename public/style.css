@@ -1,0 +1,143 @@
+:root {
+  color-scheme: light;
+  --navy: #091735;
+  --navy-deep: #071128;
+  --blue: #17449f;
+  --silver: #c9d3df;
+  --ink: #111e38;
+  --muted: #475670;
+  --line: #d7dfed;
+  --paper: #f2f5fa;
+  --white: #fff;
+  --display: "Arial Black", system-ui, sans-serif;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-padding-top: 7.5rem; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 1rem/1.5 system-ui, sans-serif; }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; font: inherit; }
+:is(a, button, summary):focus-visible { outline: 3px solid #64758b; outline-offset: 4px; }
+.top :is(a, button, summary):focus-visible, .hero :is(a, button, summary):focus-visible, .site-footer :is(a, button, summary):focus-visible { outline-color: var(--silver); }
+h1, h2, h3, p { margin: 0 0 .75rem; }
+h1, h2, h3 { line-height: 1.05; letter-spacing: -.045em; }
+h1 { font: 900 clamp(2.4rem, 5.5vw, 5.75rem)/.94 var(--display); letter-spacing: -.065em; }
+h2 { font-size: clamp(1.7rem, 3vw, 2.65rem); }
+h3 { font-size: clamp(1.4rem, 2.5vw, 2.15rem); }
+.shell { width: min(1160px, calc(100% - 64px)); margin-inline: auto; }
+.top, .site-footer { background: var(--navy-deep); color: white; }
+.top { position: sticky; top: 0; z-index: 2; border-bottom: 1px solid #344362; }
+.nav, nav, .brand, .actions, .footer { display: flex; align-items: center; }
+.nav { justify-content: space-between; min-height: 71px; gap: 1rem; }
+.brand { gap: .75rem; font-size: 1.08rem; font-weight: 850; line-height: 1.1; white-space: nowrap; }
+.brand small { display: block; color: #aebeda; margin-top: .3rem; font-size: .75rem; letter-spacing: .12em; }
+.crest { width: 39px; height: 46px; background: url("baltimore-bays-banner.jpg") center 34% / 540% auto no-repeat; border-radius: 4px; }
+nav { gap: clamp(.65rem, 2.6vw, 2rem); font-weight: 700; }
+nav a:not(.button):is(:hover, [aria-current]) { color: var(--silver); }
+.button {
+  display: inline-flex; justify-content: center; align-items: center; min-height: 44px;
+  padding: .65rem 1rem; background: var(--silver); border: 1px solid transparent;
+  border-radius: 5px; color: #172139; font-weight: 800; white-space: nowrap;
+}
+.button:hover { background: #e4eaf2; }
+.button.quiet { background: transparent; border-color: currentColor; color: inherit; }
+.button.quiet:hover { background: #809aca20; }
+.button.small { padding: .45rem .9rem; }
+.hero { isolation: isolate; position: relative; overflow: hidden; background: var(--navy); color: white; }
+.hero::before {
+  content: ""; position: absolute; inset: 0 0 0 41%; z-index: -1;
+  background: linear-gradient(90deg, var(--navy), #09173530 23%, #09173500 53%),
+    url("baltimore-bays-banner.jpg") center 33% / cover no-repeat;
+}
+.hero-copy { padding-block: clamp(3.5rem, 7vw, 6.5rem); }
+.hero h1 { margin-bottom: 1.5rem; }
+.hero em { color: var(--silver); font-style: normal; }
+.eyebrow { font-size: .88rem; font-weight: 850; letter-spacing: .13em; color: var(--blue); }
+.hero .eyebrow { color: #e3ecff; }
+.actions { gap: .65rem; flex-wrap: wrap; }
+.next-up { background: #e7edf7; border-block: 1px solid #cbd7e9; }
+.next-grid { display: flex; align-items: center; justify-content: space-between; gap: 1.2rem; padding-block: 1.25rem; }
+.next-grid h2 { margin: 0; white-space: nowrap; }
+.next-grid p { margin: .3rem 0 0; color: var(--muted); }
+.event-list { margin: 1rem 0; padding: 0; list-style: none; }
+.event-list li { border-top: 1px solid var(--line); padding: .8rem 0; overflow-wrap: anywhere; }
+.event-list :is(time, span, strong) { display: block; }
+.event-list :is(time, span) { color: var(--muted); font-size: .9rem; }
+.event-list .event-squad { font-weight: 800; color: var(--blue); }
+.next-events { display: flex; flex: 1; gap: 1rem; margin: 0; }
+.next-events li { flex: 1; border: 0; border-left: 2px solid #91a8cf; padding: 0 .6rem; }
+.home-teams { padding-block: clamp(1.8rem, 4vw, 3.5rem); }
+.home-teams > h2 { margin-bottom: 1.15rem; }
+.team-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.2rem; align-items: start; }
+.team-card { overflow: hidden; background: white; border: 1px solid var(--line); border-radius: 10px; }
+.team-card > img { display: block; width: 100%; height: auto; aspect-ratio: 1.48; object-fit: cover; }
+.team-body { border-top: 4px solid var(--blue); padding: 1.25rem; }
+.grey .team-body { border-color: #687990; }
+.team-body summary { display: list-item; width: fit-content; cursor: pointer; padding: .45rem .65rem; color: var(--blue); font-weight: 800; }
+.roster { list-style: none; margin: .75rem 0 0; padding: 0; display: grid; gap: 0 1rem; grid-template-columns: 1fr 1fr; }
+.roster li { border-top: 1px solid var(--line); padding: .42rem 0; }
+.roster b { display: inline-block; min-width: 3ch; margin-right: .5rem; color: var(--blue); }
+.subpage { min-height: 65vh; padding-block: clamp(1.5rem, 5vw, 3rem); }
+.panel { background: white; border: 1px solid var(--line); padding: clamp(1rem, 4vw, 2.6rem); border-radius: 10px; }
+.panel + .panel { margin-top: 1rem; }
+.panel h1 { font-size: clamp(2.25rem, 5vw, 4rem); margin-bottom: 1rem; }
+.panel p:not(.eyebrow) { color: var(--muted); max-width: 68ch; }
+.positions, .staff { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .65rem; }
+.switch { display: flex; gap: .55rem; flex-wrap: wrap; }
+.switch button, .position, .complete { min-height: 44px; text-align: left; padding: .55rem .8rem; background: var(--paper); color: var(--ink); border: 1px solid #a4b3cd; border-radius: 5px; }
+:is(.switch button, .position)[aria-pressed="true"] { background: var(--blue); color: white; border-color: var(--blue); }
+:is(.switch button, .position, .complete):hover { border-color: var(--blue); }
+.position strong, .position span, .staff strong { display: block; }
+.position span { font-size: .88rem; margin-top: .25rem; }
+.progress-line { display: flex; justify-content: space-between; align-items: baseline; gap: .75rem; margin-top: 1.25rem; }
+progress { width: 100%; height: 12px; accent-color: var(--blue); margin-bottom: .75rem; }
+.days { display: grid; gap: .55rem; margin-top: .85rem; }
+.days details, .staff div { background: var(--paper); border: 1px solid var(--line); border-radius: 6px; }
+.days summary { cursor: pointer; padding: .75rem; }
+.session, .staff div { padding: .85rem; }
+.staff span { display: grid; place-items: center; width: 42px; height: 42px; background: #dfe9fb; color: var(--blue); border-radius: 5px; font-weight: 850; margin-bottom: .6rem; }
+.staff p, .challenge p:last-child { margin-bottom: 0; }
+.footer { justify-content: space-between; gap: 1rem; padding-block: 1.3rem; }
+.footer > a:last-child { text-decoration: underline; text-underline-offset: .2em; }
+@media (max-width: 760px) {
+  .shell { width: calc(100% - 32px); }
+  .nav { flex-wrap: wrap; gap: .6rem; padding-block: .55rem; }
+  nav { width: 100%; justify-content: space-between; font-size: .92rem; }
+  .hero::before { inset: 0 0 auto; height: clamp(155px, 38vw, 285px); background-position: center 36%; background-image: linear-gradient(0deg, var(--navy), transparent 32%), url("baltimore-bays-banner.jpg"); }
+  .hero-copy { padding-block: calc(clamp(155px, 38vw, 285px) + .6rem) 2rem; }
+  .next-grid { align-items: flex-start; flex-wrap: wrap; }
+  .next-events { flex-basis: 100%; order: 1; }
+  .team-grid { grid-template-columns: 1fr; }
+  .positions, .staff { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 390px) {
+  .footer { align-items: flex-start; flex-direction: column; }
+  nav { gap: .4rem; font-size: .84rem; }
+  .button.small { padding-inline: .55rem; }
+}
+
+.winter-timing { display: grid; grid-template-columns: max-content 1fr; gap: .55rem 1rem; margin-bottom: 0; }
+.winter-timing dt { color: var(--blue); font-weight: 800; }
+.winter-timing dd { margin: 0; }
+.winter-week { border: 1px solid var(--line); border-radius: 6px; margin-top: .65rem; }
+.winter-week summary { cursor: pointer; font-weight: 800; color: var(--blue); padding: .85rem; }
+.winter-dates { display: block; margin-left: 1rem; font-size: .9rem; color: var(--muted); font-weight: 600; }
+.winter-sessions, .winter-tips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .75rem; }
+.winter-sessions { padding: .85rem; }
+.winter-tips { margin: 1rem 0; }
+.winter-session, .winter-tips section { background: var(--paper); border-radius: 6px; padding: .85rem; }
+.winter-session h3, .winter-tips h3 { font-size: 1.23rem; }
+.winter-session h4 { margin: .75rem 0 .25rem; font-size: .9rem; }
+.winter-session p:last-child, .winter-tips p:last-child { margin-bottom: 0; }
+@media (max-width: 760px) {
+  .winter-sessions, .winter-tips { grid-template-columns: minmax(0, 1fr); }
+}
+
+.standards-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .85rem; margin-top: 1.25rem; }
+.standards-grid section { background: var(--paper); border: 1px solid var(--line); border-radius: 6px; padding: 1rem; }
+.standards-grid h3 { color: var(--blue); font-size: 1.45rem; }
+.standards-grid ul { margin: 0; padding-left: 1.15rem; }
+.standards-grid li + li { margin-top: .65rem; }
+@media (max-width: 900px) {
+  .standards-grid { grid-template-columns: minmax(0, 1fr); }
+}
